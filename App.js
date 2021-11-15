@@ -1,13 +1,48 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import LoginScreen from './screens/LoginScreen';
+import RegisterScreen from './screens/RegisterScreen'
+import HomeScreen from './screens/HomeScreen'
+import AddChatScreen from './screens/AddChatScreen';
 
+
+const Stack = createNativeStackNavigator();
+const globalScreenOptions ={
+  headerStyle: {backgroundColor:"blue"},
+  headerTitleStyle:{color:"white"},
+  headerTintColor: {color:"white"}
+}
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator   screenOptions={globalScreenOptions}>
+      <Stack.Screen 
+      options={{
+        title: "Home",
+      }}
+      name="Home" component= {HomeScreen}/>
+      <Stack.Screen 
+      options={{
+            title: "Login",
+      }}
+      name="Login" component= {LoginScreen}/>
+      <Stack.Screen 
+      options={{
+        title: "Register",
+      }}
+      name="Register" component= {RegisterScreen}/>
+       <Stack.Screen 
+      options={{
+        title: "Add Chat",
+      }}
+      name="AddChat" component= {AddChatScreen}/>
+     
+      </Stack.Navigator>
+  </NavigationContainer>
+    
   );
 }
 
