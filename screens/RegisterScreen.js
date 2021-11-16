@@ -25,6 +25,7 @@ const RegisterScreen = ({ navigation }) => {
             imageUrl ||
             "https://www.gsu.edu/wp-content/themes/gsu-flex-2/images/logo.png",
         });
+        navigation.replace("home");
       })
       .catch((error) => alert(error.message));
   };
