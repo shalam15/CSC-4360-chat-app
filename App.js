@@ -23,19 +23,21 @@ export default function App() {
       <Stack.Navigator   screenOptions={globalScreenOptions}>
       <Stack.Screen 
       options={{
-        title: "Home",
-      }}
-      name="Home" component= {HomeScreen}/>
-      <Stack.Screen 
-      options={{
             title: "Login",
       }}
       name="Login" component= {LoginScreen}/>
-      <Stack.Screen 
+       <Stack.Screen 
       options={{
         title: "Register",
       }}
       name="Register" component= {RegisterScreen}/>
+      <Stack.Screen 
+      options={{
+        title: "Home",
+      }}
+      name="Home" component= {HomeScreen}/>
+  
+     
        <Stack.Screen 
       options={{
         title: "Add Chat",

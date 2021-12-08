@@ -1,15 +1,18 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState, useLayoutEffect } from "react";
-import { StyleSheet, View, KeyboardAvoidingView } from "react-native";
+import { StyleSheet, View, KeyboardAvoidingView,Image } from "react-native";
 import { Button, Text } from "react-native-elements";
 import { Input } from "react-native-elements/dist/input/Input";
-import { auth } from "../config/firebase";
+import { auth, db } from "../config/firebase";
+import * as firebase from "firebase";
+import dummyImage from "../assets/example.png";
 
 const RegisterScreen = ({ navigation }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const dummyImageUri = Image.resolveAssetSource(dummyImage).uri;
   useLayoutEffect(() => {
     navigation.setOptions({
       headerBackTitle: "Back to Login",
@@ -19,13 +22,19 @@ const RegisterScreen = ({ navigation }) => {
     auth
       .createUserWithEmailAndPassword(email, password)
       .then((authUser) => {
-        authUser.user.updateProfile({
-          displayName: name || "no-name",
-          photoURL:
-            imageUrl ||
-            "https://www.gsu.edu/wp-content/themes/gsu-flex-2/images/logo.png",
-        });
-        navigation.replace("home");
+        authUser.user
+          .updateProfile({
+            displayName: name,
+            photoURL: imageUrl || dummyImageUri,
+          })
+          .then(() => {
+            db.collection("users").add({
+              timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+              displayName: auth.currentUser.displayName,
+              email: email,
+              photoURL: auth.currentUser.photoURL,
+            });
+          });
       })
       .catch((error) => alert(error.message));
   };

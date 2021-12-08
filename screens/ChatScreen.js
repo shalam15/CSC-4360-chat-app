@@ -28,6 +28,7 @@ const ChatScreen = ({ navigation, route }) => {
       headerTitle: () => (
         <View
           style={{
+            color:"white",
             flexDirection: "row",
             alignItems: "center",
           }}
@@ -35,7 +36,7 @@ const ChatScreen = ({ navigation, route }) => {
           <Avatar
             rounded
             source={{
-              uri: "https://www.gsu.edu/wp-content/themes/gsu-flex-2/images/logo.png",
+              uri: route.params.photoURL,
             }}
           />
           <Text>{route.params.chatName}</Text>
@@ -68,6 +69,7 @@ const ChatScreen = ({ navigation, route }) => {
           }))
         )
       );
+      return unsubscribe;
   }, [route]);
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
